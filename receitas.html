@@ -8,23 +8,35 @@
     <title>Catálogo de Receitas</title>
 </head>
 <body onload="preencheCatalogo">
-    <main class="principal container-fluid bg-warning">ola</main>
-    <div type="flex-wrap" id="pnlCatalogo"></div>
-    <img src="feijoada.jpg">
-    <img src="farofa.jpg">
-    <img src="danoninho-caseiro.webp">
-    
-     
+    <main class="principal container-fluid bg-warning">ola
+        <div type="flex-wrap" id="pnlCatalogo">
+            <img src="feijoada.jpg">
+            <img src="farofa.jpg">
+            <img src="danoninho-caseiro.webp">
+        </div>
+    </main>
     
     <script>
-        let vetorJson = elementos[{título:"provisorio", imagem:"provisorio", preparo:"provisorio", ingredientes:["provisorio","provisorio"]}];
+        let vetorJSON='{"elementos":['+
+            '{"titulo":"Feijoada", "imagem":"provisorio", "preparo":"provisorio", "ingredientes":["provisorio","provisorio"]},'+ 
+            '{"titulo":"Farofa", "imagem":"provisorio", "preparo":"provisorio", "ingredientes":["provisorio","provisorio"]},'+ 
+            '{"titulo":"Danoninho", "imagem":"provisorio", "preparo":"provisorio", "ingredientes":["provisorio","provisorio"]}'+ 
+            
+        ']}'
+
+        let objtoJS=JSON.parse(vetorJSON);
+        console.log(objtoJS);    
+
+        document.getElementById("pnlCatalogo").innerHTML = 'titulo: ' + objtoJS.titulo;
+
+
         
         function getListaIngredientes(receita) {
-            ingredientes;
+          
         }
 
         function getCard(receita) {
-            ingredientes;
+           
 
         }
 

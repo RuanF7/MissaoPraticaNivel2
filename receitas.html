@@ -9,26 +9,23 @@
 </head>
 <body onload="preencheCatalogo">
     <main class="principal container-fluid bg-warning">ola
-        <div type="flex-wrap" id="pnlCatalogo">
-            <h2 id="nomeFeijoada">imagem1</h2>   
-            <span id="imagemFeijoada"></span>
-            <span id="imagem2"></span>
-            <span id="imagem3"></span>
+        <div type="flex-wrap" id="usuarios">
+         
         </div>
     </main>
     
-    <script type="text/javascript">
-        let vetorJSON='{"elementos":['+
-            '{"titulo":"Feijoada", "imagem":"provisorio", "preparo":"provisorio", "ingredientes":["provisorio","provisorio"]},'+ 
-            '{"titulo":"Farofa", "imagem":"provisorio", "preparo":"provisorio", "ingredientes":["provisorio","provisorio"]},'+ 
-            '{"titulo":"Danoninho", "imagem":"provisorio", "preparo":"provisorio", "ingredientes":["provisorio","provisorio"]}'+ 
-            
-        ']}'
+    <script >
+       
+        let divUsuarios = document.querySelector("#usuarios")
+           
 
-        let objtoJS=JSON.parse(vetorJSON);
-        console.log(objtoJS);    
-
-        document.getElementById("pnlCatalogo").innerHTML = 'titulo: ' + objtoJS.imagem;
+        fetch("dados.json").then((response) => {
+            response.json().then((dados) => {
+                dados.usuarios.map((usuario) => {
+                    divUsuarios.innerHTML +=  '<li> ${usuario.ingredientes} - ${usuario.imagem} </li>'
+                })
+            })
+        })
 
       
 

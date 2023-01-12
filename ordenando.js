@@ -1,7 +1,3 @@
-swap = ([a],[b]) => {
-    let a = b;
-    let b = a;
-}
 
 shuffle = (valor) => {
     for (let i = valor.length - 1; i > 0; i--) {
@@ -68,3 +64,40 @@ function ordenar() {
 function misturar() {
     
 }
+
+const todos = [];
+
+const doSort = (todos) => {
+    return todos
+        //.map(todo => todo.toLowerCase()) // make all the items lowercase
+        .sort((a, b) => {
+            //compare 2 words letter by letter
+            if (a.value > b.value) { return 1; } //first letter
+            if (a.value < b.value) { return -1;} //second letter
+            return 0; //the same
+        })
+
+
+}
+
+//attach event listener to the Add button
+document.querySelector('#Add').addEventListener('click', () => {
+
+    //get what's inside the input 
+    const data = document.querySelector('#valor');
+
+    //push the new todo into the todos array
+    todos.push(data.value);
+
+    //create additional helper array with object valuer and indexes
+    var mapped = todos.map(
+        (el, i) => ({ index: i, value: el.toLowerCase()  })
+    );
+
+    //display the sorted todos
+    todoList.innerHTML = todos.map(todo => '<li>' + todo + '</li>').join('');
+
+    //clear the value inside the input
+    data.value = '';
+
+});

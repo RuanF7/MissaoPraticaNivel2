@@ -1,103 +1,142 @@
-
-shuffle = (valor) => {
-    for (let i = valor.length - 1; i > 0; i--) {
+let swap = (arr, pos1, pos2) => {
+    // Salvando valor da posição 1
+    let a = arr[pos1];
+    // Trocando valores das posições
+    [arr[pos1], arr[pos2]] = [arr[pos2], a];
+    return arr;
+};
+let shuffle = (arr) => {
+    // Loop em todos os elementos
+    for (let i = arr.length - 1; i > 0; i--) {
+        // Escolhendo elemento aleatório
         const j = Math.floor(Math.random() * (i + 1));
-        const temp = valor[i];
-        valor[i] = valor[j];
-        valor[j] = temp;
+        // Reposicionando elemento
+        [arr[i], arr[j]] = [arr[j], arr[i]];
     }
-
-    return valor;
-    
-}
-
-bubble_sort = (valor) => {
-   const val = valor.slice();
-   for (let i = 0; i < val.length - 1; i++) {
-     for (let j = 0; j < val.length - 1 - i; j++) {
-       if (val[j] > val[j+i]) {
-        [val[j], val[j+1]] = [val[j+1], val[j]];
-       }
-     }
-   }
-   return val;
-}
-
-selection_sort = (valor) => {
-    const val = valor.slice();
-    
-    for (let i = 0; i < val.length - 1; i++ ) {
-        let minIndex = i;
-        for (let j = i + 1; j < val.length; j++) {
-            if (val[j] < val[minIndex]) {
-                minIndex = j;
+    // Retornando array com aleatoriedade
+    return arr;
+};
+let bubble_sort = (arr) => {
+    let i, j;
+    for (i = arr.length - 1; i > 0; i--) {
+        for (j = 0; j < i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr, j, j + 1);
             }
         }
-        [val[i], val[minIndex]] = [val[minIndex], val[i]];
     }
-
-    return val;
+    return arr;
+};
+let selection_sort = (arr) => {
+    let menor, indmenor, i, j;
+    let n = arr.length;
+    for (i = 0; i < n - 1; i++) {
+        menor = arr[i];
+        indmenor = i;
+        for (j = i; j < n; j++) {
+            if (arr[j] < menor) {
+                menor = arr[j];
+                indmenor = j;
+            }
+        }
+        swap(arr, i, indmenor);
+    }
+    return arr;
+};
+function particionamento(arr, esquerda, direita) {
+    var pivot = arr[Math.floor((direita + esquerda) / 2)], //middle element
+    i = esquerda, //ponteiro da esquerda
+    j = direita; //ponteiro da direita
+    while (i <= j) {
+        while (arr[i] < pivot) {
+            i++;
+        }
+        while (arr[j] > pivot) {
+            j--;
+        }
+        if (i <= j) {
+            swap(arr, i, j); //trocando os elementos
+            i++;
+            j--;
+        }
+    }
+    return i;
+}
+function quickSort(arr, esquerda, direita) {
+    var index;
+    if (arr.length > 1) {
+        index = particionamento(arr, esquerda, direita); //indice retornado pelo particionamento
+        if (esquerda < index - 1) { //mais elementos do lado esquerdo do pivo
+            quickSort(arr, esquerda, index - 1);
+        }
+        if (index < direita) { //mais elementos do lado direito do pivo
+            quickSort(arr, index, direita);
+        }
+    }
+    return arr;
 }
 
-quick_sort = (valor) => {
-    if (valor.length <= 1) {
-        return valor;
-    }
-    const pivot = valor[valor.length - 1];
-    const leftVal = [];
-    const rightVal = [];
-    for (const el of valor.slice(0, valor.length - 1)) {
-        el < pivot ? leftVal.push(el) : rightVal.push(el);
-    }
-    return [...quick_sort(leftVal), pivot, ...quick_sort(rightVal)];
-}    
+function add(){
+    let valor = document.getElementById("valor").value;
 
-function add() {
-    let valor = document.getElementById("valor");
-    let valores = document.getElementById("valores");
+    if(valor != ""){
+        let lista = document.getElementById("valores");
+        var novoItem = document.createElement("li");
+        novoItem.textContent = valor;
+        lista.appendChild(novoItem);
+        document.getElementById("valor").value = "";
+    }
+
 }
 
-function ordenar() {
+function ordenar(){
+    let lista = document.getElementById("valores").children;
+    array = [];
+
+    for(let i = 0; i < lista.length; i++){
+        array[i] = eval(lista[i].innerHTML);
+    }
+    
+    var indiceSelecionado = document.getElementById("sort").value;
+
+    if(indiceSelecionado == "1"){
+        array = bubble_sort(array);
+        inserirArray(array);
+        return
+    }
+    if(indiceSelecionado == "2"){
+        array = selection_sort(array);
+        inserirArray(array);
+        return
+    }
+    if(indiceSelecionado == "3"){
+        array = quickSort(array, 0, array.length -1);
+        inserirArray(array);
+        return
+    }
+}
+
+function inserirArray(array){
+    let lista = document.getElementById("valores");
+    lista.innerHTML = "";
+    array.map((item) => {
+        let novoItem = document.createElement("li");
+        novoItem.textContent = item;
+        lista.appendChild(novoItem);
+    });
+}
+
+function misturar(){
+    let lista = document.getElementById("valores").children;
+    lista = Array.from(lista)
+    let vetor = [];
+
+    for(let elem of lista){
+        vetor.push(eval(elem.innerHTML));
+    }
+
+    shuffle(vetor);
+
+    inserirArray(vetor);
     
 }
-
-function misturar() {
-    
-}
-
-const todos = [];
-
-const doSort = (todos) => {
-    return todos
-        //.map(todo => todo.toLowerCase()) // make all the items lowercase
-        .sort((a, b) => {
-            //compare 2 words letter by letter
-            if (a.value > b.value) { return 1; } //first letter
-            if (a.value < b.value) { return -1;} //second letter
-            return 0; //the same
-        })
-
-
-}
-
-//attach event listener to the Add button
-document.querySelector('#Add').addEventListener('click', () => {
-
-    //get what's inside the input 
-    const data = document.querySelector('#valor');
-
-    //push the new todo into the todos array
-    todos.push(data.value);
-
-    //create additional helper array with object valuer and indexes
-    var mapped = todos.map(
-        (el, i) => ({ index: i, value: el.toLowerCase()  })
-    );
-
-    //display the sorted todos
-    todoList.innerHTML = todos.map(todo => '<li>' + todo + '</li>').join('');
-
-    //clear the value inside the input
-    data.value = '';
-
-});

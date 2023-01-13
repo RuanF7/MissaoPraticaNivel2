@@ -5,15 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="styles.css"  rel="stylesheet">
     <title>Catálogo de Receitas</title>
 </head>
 <body onload="preencher()">
     <h1>Catálogo de Receitas</h1>
-    <main class="principal container-fluid bg-warning">
-        <div id='pnlCatalogo' type="flex-wrap">
-            <ul id="minhaLista">
-                
-            </ul>
+    <main id="principal" class="container-fluid bg-warning col-10">
+        <div id='pnlCatalogo' class="flex-wrap flex-row d-flex mb-2">
+            
         </div>
     </main>
     
@@ -22,20 +21,26 @@
                 {
                     titulo: "Feijoada", 
                     imagem: "feijoada.jpg", 
-                    preparo: "provisorio",
+                    preparo: "Refogue as carnes com a cebola em uma panela de pressão até que esteja \
+                              tudo bem dourado, acrescente sal e ervas a gosto, misture bem e acrescente\
+                              o feijão cozido. Após 20min na pressão, está pronto para servir. ",
                     ingredientes: ["provisorio","provisorio"]
                 },
                 {
                     titulo: "Farofa",
                     imagem: "farofa.jpg",
-                    preparo: "provisorio", 
+                    preparo: "Refogue primeiro a calabresa e a cebola, quando ja estiverem dourando, junte \
+                              o alho e espere dourar. Acrescente a farinha e mexa bem até que mude de cor. \
+                              acrescente a manteiga e sal a gosto misture tudo até que fique no ponto que mais lhe agrade.", 
                     ingredientes: ["provisorio","provisorio"]
                 },
                 {   
                     titulo: "Danoninho",
                     imagem: "danoninho-caseiro.webp",
-                    preparo: "provisorio",
-                    ingredientes: ["provisorio","provisorio"]
+                    preparo: "Bata o creme de leite, leite condensado e o suco no liquidificador até obter\
+                              uma mistura homogênea. Sirva em potinhos de sua preferência, e se quiser decore\
+                              com morangos por cima. Leve a geladeira por 1h.",
+                    ingredientes: ["1 lata de leite condensado","2 latas de creme de leite","1 pacote de suco em pó sabor morango","Morangos (opcional)"]
                 }      
         ];
                 
@@ -48,7 +53,7 @@
 		}
 
 		function getCard(receita){
-			let card = `<div class="card" style="width:250px;">`;
+			let card = `<div class="card" style="width:18rem;">`;
 			card += `<img src="${receita.imagem}" class="card-img-top">`;
 			card += `<div class="card-body">`;
 			card += `<h5 class="card-title">${receita.titulo}</h2>`;
